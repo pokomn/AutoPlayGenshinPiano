@@ -8,3 +8,4 @@ In chinese area, Windows OS employs gbk as its default code. So, if you didn't c
 You could also change your default code to utf-8, where you chould exec the app without gbk.
 
 Before you exec the app, remember to start Genshin and the piano.
+
