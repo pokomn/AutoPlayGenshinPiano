@@ -4,7 +4,7 @@
 #include <ctype.h>  
 #include <windows.h>
 
-double note_time = 60000.0/90;
+double note_time = 60000.0/60;
 
 
 // 定义链表节点结构  
@@ -212,14 +212,26 @@ void print_list(Node* head) {
         current = current->next;  
     }  
 }  
-  
+
+
+//使用k,l,i,o,p来空拍或者凑非整数拍
+//一个小节4拍的话，半拍就凑够8个字母组合，1拍对应一个字母组合加一个空拍
 int main(int argc, char* argv[]) {  
     
-    /*if (argc != 2) {  
+    if (argc < 2) {  
         printf("用法: %s <文件>\n", argv[0]);  
         return 1;  
-    }  */
+    }
     
+    if (argc >= 3){
+        note_time = 4.0* 60000.0/atof(argv[2]);
+        if (note_time <= 50)
+        {
+            note_time = 50;
+        }
+        
+    }
+
     // 注册全局热键（Ctrl+P，id=1）
     if (!RegisterHotKey(NULL, 1, MOD_CONTROL, 'P')) {
         printf("热键注册失败！错误代码：%d\n", GetLastError());
@@ -228,7 +240,7 @@ int main(int argc, char* argv[]) {
 
     char* dir="./Firework.txt";
 
-    Node* head = parse_file(dir);  
+    Node* head = parse_file(argv[1]);  
     if (!head) {  
         printf("解析文件失败\n");  
         return 1;  
